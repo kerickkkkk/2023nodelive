@@ -3,12 +3,12 @@
   "version": "0.0.1",
   "private": true,
   "engines": {
-    "node": ">= 18.0.0"
+    "node": "^18.0.0"
   },  
   "scripts": {
     "start": "node ./dist/bin/www",
     "start:dev": "nodemon --exec ts-node ./bin/www",
-    "build": "npx tsc"
+    "build": "tsc"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
