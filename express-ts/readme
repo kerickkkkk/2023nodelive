@@ -1,0 +1,6 @@
+# 將 express 轉成 TypeScript
+
+- 進入點是 www
+- 將套件加入 @types
+- 專案內要有 nodemon, typescript 
+- 不要整個檔案 翻譯成 typescript，將錯誤的地方修正即可
