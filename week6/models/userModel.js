@@ -15,6 +15,16 @@ const userSchema = new mongoose.Schema(
     photo:{
       type: String,
       default:''
+    },
+    sex: {
+      type: String,
+      enum:['male', 'female']
+    },
+    password: {
+      type: String,
+      required: [true, '請輸入密碼'],
+      minlength: 8,
+      select: false
     }
   },
   { versionKey: false }
