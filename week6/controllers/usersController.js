@@ -13,7 +13,7 @@ const users = {
       handleSuccess(res, users)
     }),
     // 以 jwt 確認使用者並取得資料
-    checkUser : handleErrorAsync(async  (req, res, next) => {
+    profile : handleErrorAsync(async  (req, res, next) => {
       handleSuccess(res, req.user)
     }),
     resetPassword : handleErrorAsync(async  (req, res, next) => {
@@ -91,6 +91,29 @@ const users = {
         generateJWT(user, res)
       }
     }),
+    updateProfile : handleErrorAsync( async(req, res, next) => {
+      const { name, photo, sex} = req.body
+      console.log( { name, photo, sex} )
+      // name 不得為空
+      const params = {}
+      if( !name ) {
+        return next( appError(400, '欄位不可為空', next))
+      }{
+        params.name = name
+      }
+      // 允許空
+      if(photo === "" || photo){
+        params.photo = photo
+      }
+      if( sex === "" || sex ){
+        params.sex = sex
+      }
+      const updateUser = await User.findByIdAndUpdate(req.user.id, params , {
+        returnDocument: 'after'
+      })
+      
+      handleSuccess(res, updateUser)
+    })
 }
 
 module.exports = users
