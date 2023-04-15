@@ -1,6 +1,5 @@
 const appError = require('../service/appError')
 const checkword = (req,res,next) => {
-    console.log(next)
     if(req.query.q){
         next()
     }else{

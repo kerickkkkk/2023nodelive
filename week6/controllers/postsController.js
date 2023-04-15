@@ -18,14 +18,15 @@ const posts = {
       handleSuccess(res, posts)
     }),
     postPosts : handleErrorAsync(async (req, res, next) => {
+      const { id } = req.user
       // 自定義錯誤
       if( !req.body.content ){
         return next( appError(400, 'content 未填', next) )
       }
-      const { content, user } = req.body
+      const { content } = req.body
         const newPost = await Post.create({
-          user,
-          content
+          user : id,
+          content 
         })
         handleSuccess(res, newPost)
     })
