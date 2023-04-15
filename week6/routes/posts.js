@@ -8,5 +8,7 @@ const {isAuth} = require('../middleware/auth')
 /* GET users listing. */
 router.get('/posts', isAuth, postsController.getPosts);
 router.post('/posts', isAuth, postsController.postPosts);
+router.patch('/posts/:id', isAuth, postsController.updatePost);
+router.delete('/posts/:id', isAuth, postsController.deletePost);
 
 module.exports = router;
