@@ -37,22 +37,21 @@ const posts = {
         return next( appError(400, '文章 ID 錯誤', next) )
       }
       const {content} = req.body
-      const updatePost = await Post.findByIdAndUpdate(postId, {
-        content
-      } , {
-        returnDocument: 'after'
-      }).populate({
+      const currentPost = await Post.findById(postId).populate({
         path: 'user',
         select:'id'
       })
-      if(req.user.id !== updatePost.user.id){
+      if( !currentPost ){
+        return next( appError(400, '找不到文章', next) )
+      }
+      if(req.user.id !== currentPost.user.id){
         return next( appError(400, '沒有權限修改文章', next) )
       }
-      if( !updatePost ){
-        return next( appError(400, '找不到文章', next) )
-      }else {
-        handleSuccess(res, updatePost)
-      }
+      await currentPost.updateOne({_id: postId, content})
+      // const updatedPost = await Post.findById(postId);
+      handleSuccess(res, {
+        message: "已更新"
+      })
     }),
     deletePost : handleErrorAsync(async (req, res, next) => {
       const {id: postId} = req.params
