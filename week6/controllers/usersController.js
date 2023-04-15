@@ -8,39 +8,7 @@ const User = require('../models/userModel')
 
 
 const users = {
-    getUsers : handleErrorAsync(async  (req, res, next) => {
-      const users = await User.find()
-      handleSuccess(res, users)
-    }),
-    // 以 jwt 確認使用者並取得資料
-    profile : handleErrorAsync(async  (req, res, next) => {
-      handleSuccess(res, req.user)
-    }),
-    resetPassword : handleErrorAsync(async  (req, res, next) => {
-      const { password, confirmPassword} = req.body
-      if(!req.user){
-        return next( appError(400, '沒有使用者或者沒有權限', next))
-      }
-      
-      // 驗證 
-      if( !password || !confirmPassword ) {
-        return next( appError(400, '欄位不可為空', next))
-      }
-
-      if( password !== confirmPassword ) {
-        return next( appError(400, '輸入密碼與確認密碼需相同', next))
-      }
-
-      if( !validator.isLength(password, {min:8})){
-        return next( appError(400, '密碼長度需大於 8 碼', next))
-      }
-      
-      const bcryptPassword = await bcrypt.hash( password, 12)
-      const user = await User.findByIdAndUpdate(req.user, {
-        password: bcryptPassword,
-      })
-      generateJWT( user, res)
-    }),
+    // 註冊
     singUp : handleErrorAsync( async (req, res, next) => {
       const {name, email, password, confirmPassword} =req.body
       // 驗證 
@@ -68,6 +36,7 @@ const users = {
       })
       generateJWT( newUser, res)
     }),
+    // 登入
     login : handleErrorAsync( async(req, res, next) => {
       const {email, password} = req.body
       // 驗證 
@@ -91,6 +60,43 @@ const users = {
         generateJWT(user, res)
       }
     }),
+    // 蟲是密碼
+    resetPassword : handleErrorAsync(async  (req, res, next) => {
+      const { password, confirmPassword} = req.body
+      if(!req.user){
+        return next( appError(400, '沒有使用者或者沒有權限', next))
+      }
+      
+      // 驗證 
+      if( !password || !confirmPassword ) {
+        return next( appError(400, '欄位不可為空', next))
+      }
+
+      if( password !== confirmPassword ) {
+        return next( appError(400, '輸入密碼與確認密碼需相同', next))
+      }
+
+      if( !validator.isLength(password, {min:8})){
+        return next( appError(400, '密碼長度需大於 8 碼', next))
+      }
+      
+      const bcryptPassword = await bcrypt.hash( password, 12)
+      const user = await User.findByIdAndUpdate(req.user, {
+        password: bcryptPassword,
+      })
+      generateJWT( user, res)
+    }),
+    // 取得所有使用者
+    getUsers : handleErrorAsync(async  (req, res, next) => {
+      const users = await User.find()
+      handleSuccess(res, users)
+    }),
+    // 以 jwt 確認使用者並取得資料
+    // 使用者個人資料
+    profile : handleErrorAsync(async  (req, res, next) => {
+      handleSuccess(res, req.user)
+    }),
+    //更新使用者資料
     updateProfile : handleErrorAsync( async(req, res, next) => {
       const { name, photo, sex} = req.body
       console.log( { name, photo, sex} )
