@@ -1,10 +1,8 @@
-import { Request, Response, NextFunction } from 'express';
-var express = require('express');
-var router = express.Router();
+import userController from '../controller/userController'
+import express from 'express';
+const router = express.Router();
 
 /* GET users listing. */
-router.get('/', (req: Request, res: Response, next: NextFunction): void =>  {
-  res.send('resdsouddde');
-});
+router.get('/', userController.index);
 
-module.exports = router;
+export default router;

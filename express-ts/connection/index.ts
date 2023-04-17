@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
-const dotenv = require('dotenv');
+import mongoose from 'mongoose'
+import dotenv from 'dotenv'
 dotenv.config();
 
-let DB :string = ''
+let DB = ''
 if( process.env.NODE_ENV === 'dev'){
   // 注意 使用 localhost 會連不到 目前看版本 up node 17up 要改成 127.0.0.1
   DB = 'mongodb://127.0.0.1:27017/post'
