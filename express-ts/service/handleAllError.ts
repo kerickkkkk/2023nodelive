@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import {AppError} from '../types/AppError';
 
 const resErrorProd = (err:AppError, res:Response) => {
-  console.log('resErrorProd')
   err.statusCode = err.statusCode || 400
   if (err.isOperational) {
     res.status(err.statusCode).json({
@@ -31,6 +30,7 @@ const resErrorDev = (err: AppError, res:Response) => {
 // 統一管理錯誤處理
 const handleAllError = (err :any, req:Request , res:Response) => {
   // dev
+  console.log(err)
   if (process.env.NODE_ENV === 'dev') {
     return resErrorDev(err, res);
   } 
