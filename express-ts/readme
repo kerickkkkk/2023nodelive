@@ -7,6 +7,7 @@
 
 # 專案使用 
 
+- cd express-ts
 - npm install
 - 環境
     - 開發中： npm run start:dev
