@@ -8,11 +8,11 @@ interface Payload {
     id: string
 }
 
-interface RequestContainUser extends Request {
-    user: any
-}
+// interface RequestContainUser extends Request {
+//     user: any;
+// }
 
-export const isAuth = async (req:RequestContainUser, res:Response, next:NextFunction) => {
+export const isAuth = async (req:any , res:Response, next:NextFunction) => {
     // 取得 JWT 
     let token = '';
     if( 

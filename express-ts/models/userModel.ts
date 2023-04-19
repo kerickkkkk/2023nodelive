@@ -1,4 +1,12 @@
-import { Schema, model } from 'mongoose';
+import { Schema, Document, model } from 'mongoose';
+interface IUser extends Document {
+  name: string;
+  phone: string;
+  email ?: string;
+  photo ?: string;
+  sex : 'male'|'female';
+  password:string;
+}
 
 const userSchema = new Schema(
   {
@@ -11,7 +19,7 @@ const userSchema = new Schema(
       required: [true, '請輸入您的手機'],
       unique: true,
     },
-    email:{
+    email: {
       type: String,
     },
     photo: {
@@ -37,6 +45,6 @@ const userSchema = new Schema(
   { versionKey: false }
 );
 
-export const User = model('User', userSchema);
+export const User = model<IUser>('User', userSchema);
 
 

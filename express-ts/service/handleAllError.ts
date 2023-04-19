@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import {AppError} from '../types/AppError';
 
 const resErrorProd = (err:AppError, res:Response) => {
@@ -28,9 +28,8 @@ const resErrorDev = (err: AppError, res:Response) => {
 };
 
 // 統一管理錯誤處理
-const handleAllError = (err :any, req:Request , res:Response) => {
+const handleAllError = (err :any, req:Request , res:Response, next: NextFunction) => {
   // dev
-  console.log(err)
   if (process.env.NODE_ENV === 'dev') {
     return resErrorDev(err, res);
   } 
